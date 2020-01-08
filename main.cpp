@@ -1,7 +1,8 @@
 #include <stdio.h>
+#include <iostream>
 #include "ansigame.h"
 #include <unistd.h>
-#include <string>
+//#include <string>
 #include <sys/time.h>
 //#include <math.h>
 
@@ -13,16 +14,18 @@ float cpu_pct = 0.0;
 
 int frames = 0;
 
-void game_loop()
+void gameloop()
 {
-    tx_pos(0, 0);
-    tx_print("!", BWHITE, BLACK);
-    tx_print("!", WHITE, BLACK);
-    tx_print("", 0, 0); // This resets terminal to default colors
-    tx_plot("TEST! FRAME:", BRED, BBLACK, 10, 10);    
-    tx_plot(std::to_string(frames).c_str(), BRED, BLACK, 23, 10);
+    tx_plot2(std::to_string(frames).c_str(), CYAN, BLACK, 30, 10);
+
     frames++;
     if(frames==61) { frames = 0; }
+    
+}
+
+int init()
+{
+    tx_plot2("TEST!", BRED, BBLACK, 10, 10);
 }
 
 int main()
@@ -34,25 +37,34 @@ int main()
 
     struct timeval tv1, tv2;
 
+    init();
+
     int inch = 0;
     while(inch == 0) // TODO
     {
         // _wait is the expected FPS in us minus code exec time.
         usleep(_wait); 
-        // EXEC CODE MARK:
-        gettimeofday(&tv1, NULL);
-        // run the game loop (bulk of code here!)
-        game_loop();
-        // TODO: add flush to screen
 
-        // EXEC CODE MARK:
+    // EXEC CODE MARK:
+        gettimeofday(&tv1, NULL);
+
+        // run the game loop (bulk of code here!)
+        gameloop();
+        draw();
+
+    // EXEC CODE MARK:
         gettimeofday(&tv2, NULL);
         _wait = wait - (tv2.tv_usec-tv1.tv_usec); // calc new wait time: this amounts to vblank.
-
         cpu_pct = (float)((wait-_wait)*100.0 / wait);
+        if(cpu_pct>0)
+        { 
+            tx_plot2(std::to_string(cpu_pct).c_str(), BRED, "0", 70, 23);
+            tx_plot2("% CPU ", WHITE, "0", 74, 23);
+        }
+        // draw will flush entire screen_data[] to terminal. takes about 2% cpu/frame on 2.4ghz dual core
         
-        tx_plot(std::to_string(pct).c_str(), BRED, BLACK, 70, 23);
-        tx_plot("CPU ", 0, 0, 74, 23);
+        // update screen all at once - don't make more changes after this point.
+        fflush(stdout);
     }
 
     tx_quit();
