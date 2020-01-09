@@ -156,6 +156,11 @@ void tx_plot2(const char* p, const char* fg, const char* bg, int x, int y)
     }   
 }
 
+static const char *const x11_names[] =
+{
+
+};
+
 void tx_draw_xpm(const char* const* data, int x, int y)
 {
     // split data 0 into width, height, color, cbpp    
@@ -173,7 +178,7 @@ void tx_draw_xpm(const char* const* data, int x, int y)
     n = s.find(" ", n+1);
     cpc = std::stoi(s.substr(n));
 
-    // while i < numcol: data[i] ...
+    // split next 'numcol' strings into color and character
     std::string xpmchars[numcol];
     std::string colors[numcol];
     for(int i = 0; i < numcol; i++)
@@ -183,7 +188,8 @@ void tx_draw_xpm(const char* const* data, int x, int y)
         n = ff.find("c");
         colors[i] = ff.substr(n+2);
     }
-            
+    
+    
     tx_plot2(xpmchars[1].c_str(), WHITE, BLACK, x, y+1);
     tx_plot2(colors[1].c_str(), WHITE, BLACK, x, y);
     

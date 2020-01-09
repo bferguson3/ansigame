@@ -5,7 +5,7 @@
 //#include <string>
 #include <sys/time.h>
 //#include <math.h>
-#include "icon2.xpm"
+//#include "icon2.xpm"
 
 int fps = 60; // change to 50 or 30 or 15 if you want
 float w = 1000000/fps;
@@ -45,7 +45,7 @@ void gameloop()
 int init()
 {
 //    tx_plot2("TEST!", BRED, CYAN, 10, 10);
-    tx_draw_xpm(sample_xpm, 10, 10);
+    //tx_draw_xpm(sample_xpm, 10, 10);
 }
 
 int debug()
