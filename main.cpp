@@ -21,7 +21,6 @@ int frames = 0;
 
 int tempx = 0;
 int tempy = 0;
-//char tempc[4] = "30";
 
 void gameloop()
 {
@@ -35,12 +34,9 @@ void gameloop()
     tempc[1] = tc;
     if(bc==1){tempc[0]='9';}
     tx_plot2(e_c, "30", tempc, rand()%X_RESOLUTION, rand()%Y_RESOLUTION);    
-    //tempx++; if(tempx >= X_RESOLUTION){ tempx=0; tempy++; }
-    //if (tempy >= Y_RESOLUTION) { tempy = 0; }
 
     frames++;
     if(frames==fps) { frames = 0; }
-    
 }
 
 int init()
@@ -57,7 +53,7 @@ int debug()
     }
     
     gettimeofday(&frameend, NULL);
-    fpscalc = ((frameend.tv_usec - framestart.tv_usec))*(fps*1.0)/wait;
+    fpscalc = 1000000.0/((frameend.tv_usec - framestart.tv_usec));
     framestart = frameend;
     
     tx_plot2(std::to_string(fpscalc).c_str(), BCYAN, BLACK, 20, 0);
@@ -96,8 +92,6 @@ int main()
     //
         if(ENABLE_DEBUG == true) { debug(); }
 
-        // draw will flush entire screen_data[] to terminal. takes about 2% cpu/frame on 2.4ghz dual core
-        
         // update screen all at once - don't make more changes after this point.
         fflush(stdout);
     }
