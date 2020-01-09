@@ -1,5 +1,7 @@
 #include <string>
 #include <cstring>
+#include <termios.h>
+#include <cctype>
 
 #ifndef __ansigame_h_
 #define __ansigame_h_
@@ -50,7 +52,7 @@ class ANSIGame
         int draw();
         void tx_plot2(const char* p, const char* fg, const char* bg, int x, int y);
         void tx_draw_xpm(const char* const* data, int x, int y);
-
+        void disable_key_echo();
     private:
         
 };

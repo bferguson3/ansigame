@@ -3,6 +3,7 @@
 #include "ansigame.h"
 #include <unistd.h>
 #include <sys/time.h>
+
 //#include "icon2.xpm"
 
 int fps = 60;           // change to 50 or 30 or 15 if you want
@@ -22,8 +23,7 @@ ANSIGame g;
 
 void gameloop()
 {
-    g.tx_plot2(std::to_string(frames).c_str(), BCYAN, BLACK, 30, 10);
-
+    g.tx_plot2("This is a rendering test!", BCYAN, BLACK, 30, 10);
     // plot colors
 /*
     const char* e_c = " ";
@@ -42,7 +42,8 @@ void gameloop()
 #include "assets/icon2.xpm"
 
 int init()
-{
+{   
+    g.disable_key_echo();    
     g.tx_draw_xpm(sample_xpm, 10, 5);
 }
 
@@ -68,6 +69,7 @@ int debug()
 int main()
 {
     g.wait_for_resize();
+
     g.clear_screen();
 
     g.show_cursor(false);    
@@ -99,6 +101,7 @@ int main()
         if(ENABLE_DEBUG == true) { debug(); }
 
         // update screen all at once - don't make more changes after this point.
+        
         fflush(stdout);
     }
 

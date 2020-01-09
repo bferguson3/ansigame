@@ -1,5 +1,4 @@
 #include "ansigame.h"
-#include <cctype>
 
 #define xpm_support 0 // IF 0 SAVES ~40kB on EXECUTABLE
 
@@ -98,7 +97,6 @@ int ANSIGame::show_cursor(bool tf)
     return 1;
 }
 
-//#include "assets/fruit.h"
 int ANSIGame::draw()
 {
     tx_pos(0, 0);
@@ -110,10 +108,6 @@ int ANSIGame::draw()
             printf("%c", screen_data[i][v]);
         }
     }
-    
-//    for(int v=0; v < 24406; v++){
-//        printf("%c", fruit[v]);
-//    }
 }
 
 void ANSIGame::tx_plot2(const char* p, const char* fg, const char* bg, int x, int y)
@@ -143,6 +137,14 @@ void ANSIGame::tx_plot2(const char* p, const char* fg, const char* bg, int x, in
         }
     }   
 }
+
+void ANSIGame::disable_key_echo()
+{
+    struct termios t;
+    tcgetattr(0, &t);    
+    t.c_lflag &= ~(ECHO);
+    tcsetattr(0, TCSAFLUSH, &t);
+}    
 
 const char* x11_names[] = 
 { 
@@ -984,7 +986,7 @@ void ANSIGame::tx_draw_xpm(const char* const* data, int x, int y)
         else if(myc=="BWHITE") { colors[c]=BWHITE; }
         else { colors[c] = BLACK; }
     }
-    // now iterate through image data and print colored spaces to screen    
+    // now iterate through image data and print colored spaces to screen
     const char* spc = " ";
     for(int yy = 0; yy < h; yy++)
     {
