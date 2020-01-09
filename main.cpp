@@ -12,20 +12,31 @@ int wait = int(w);
 int _wait = wait;
 float cpu_pct = 0.0;
 
+bool ENABLE_DEBUG = true;
+
 int frames = 0;
 
 void gameloop()
 {
-    tx_plot2(std::to_string(frames).c_str(), CYAN, BLACK, 30, 10);
+    tx_plot2(std::to_string(frames).c_str(), BCYAN, BLACK, 30, 10);
 
     frames++;
-    if(frames==61) { frames = 0; }
+    if(frames==fps) { frames = 0; }
     
 }
 
 int init()
 {
-    tx_plot2("TEST!", BRED, BBLACK, 10, 10);
+    tx_plot2("TEST!", BRED, CYAN, 10, 10);
+}
+
+int debug()
+{
+    cpu_pct = (float)((wait-_wait)*100.0 / wait);
+    if(cpu_pct>0){ 
+        tx_plot2(std::to_string(cpu_pct).c_str(), BRED, "0", 70, 23);
+        tx_plot2("% CPU ", WHITE, "0", 74, 23);
+    }
 }
 
 int main()
@@ -47,7 +58,7 @@ int main()
 
     // EXEC CODE MARK:
         gettimeofday(&tv1, NULL);
-
+    //
         // run the game loop (bulk of code here!)
         gameloop();
         draw();
@@ -55,12 +66,11 @@ int main()
     // EXEC CODE MARK:
         gettimeofday(&tv2, NULL);
         _wait = wait - (tv2.tv_usec-tv1.tv_usec); // calc new wait time: this amounts to vblank.
-        cpu_pct = (float)((wait-_wait)*100.0 / wait);
-        if(cpu_pct>0)
-        { 
-            tx_plot2(std::to_string(cpu_pct).c_str(), BRED, "0", 70, 23);
-            tx_plot2("% CPU ", WHITE, "0", 74, 23);
-        }
+        if(_wait <= 0) { _wait = 1000; }
+        else if(_wait >= 16666) { _wait = 10000; }
+    //
+        if(ENABLE_DEBUG == true) { debug(); }
+
         // draw will flush entire screen_data[] to terminal. takes about 2% cpu/frame on 2.4ghz dual core
         
         // update screen all at once - don't make more changes after this point.

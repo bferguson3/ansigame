@@ -131,9 +131,9 @@ int draw()
 void tx_plot2(const char* p, const char* fg, const char* bg, int x, int y)
 {
     for(int c=0;c<std::strlen(p);c++){
-
-        unsigned char out[SCR_DAT_SIZE] = " [\x00\x33\x32;\x00\x34\x31m \xff";    
-
+        // white/black empty space:
+        unsigned char out[SCR_DAT_SIZE] = "\x1b[\x00\x33\x37;\x00\x34\x30m \xff";
+        
         char f1 = fg[0];
         char f2 = fg[1];
         char b1 = bg[0];
@@ -147,7 +147,7 @@ void tx_plot2(const char* p, const char* fg, const char* bg, int x, int y)
         }
         
         out[3]=f1; out[4]=f2; 
-        out[0] = 0x1b;
+        //out[0] = 0x1b;
         out[10] = p[c];
 
         for(int u=0;u<SCR_DAT_SIZE;u++){
