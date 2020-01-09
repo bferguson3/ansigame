@@ -1,6 +1,7 @@
 #include "ansigame.h"
+#include <cctype>
 
-#define xpm_support 1 // IF 0 SAVES ~40kB on EXECUTABLE
+#define xpm_support 0 // IF 0 SAVES ~40kB on EXECUTABLE
 
 const int COLOR_DEPTH = 4; // if 8 then 256 colors, else 16fg/8bg
 
@@ -97,7 +98,7 @@ int ANSIGame::show_cursor(bool tf)
     return 1;
 }
 
-
+//#include "assets/fruit.h"
 int ANSIGame::draw()
 {
     tx_pos(0, 0);
@@ -109,6 +110,10 @@ int ANSIGame::draw()
             printf("%c", screen_data[i][v]);
         }
     }
+    
+//    for(int v=0; v < 24406; v++){
+//        printf("%c", fruit[v]);
+//    }
 }
 
 void ANSIGame::tx_plot2(const char* p, const char* fg, const char* bg, int x, int y)
@@ -954,9 +959,49 @@ void ANSIGame::tx_draw_xpm(const char* const* data, int x, int y)
         n = ff.find("c");
         colors[i] = ff.substr(n+2);
     }
-    
-    
-    tx_plot2(xpmchars[1].c_str(), WHITE, BLACK, x, y+1);
-    tx_plot2(colors[1].c_str(), WHITE, BLACK, x, y);
-    
+
+    // reassign strings to internal values
+    for(int c = 0; c < numcol; c++)
+    {
+        std::string myc = colors[c];
+        for(int p=0;p<myc.length();p++){
+            myc[p] = toupper(myc[p]); }
+        if(myc=="BLACK") { colors[c]=BLACK; }
+        else if(myc=="RED") { colors[c]=RED; }
+        else if(myc=="GREEN") { colors[c]=GREEN; }
+        else if(myc=="YELLOW") { colors[c]=YELLOW; }
+        else if(myc=="BLUE") { colors[c]=BLUE; }
+        else if(myc=="MAGENTA") { colors[c]=MAGENTA; }
+        else if(myc=="CYAN") { colors[c]=CYAN; }
+        else if(myc=="WHITE") { colors[c]=WHITE; }
+        else if(myc=="BBLACK") { colors[c]=BBLACK; }
+        else if(myc=="BRED") { colors[c]=BRED; }
+        else if(myc=="BGREEN") { colors[c]=BGREEN; }
+        else if(myc=="BYELLOW") { colors[c]=BYELLOW; }
+        else if(myc=="BBLUE") { colors[c]=BBLUE; }
+        else if(myc=="BMAGENTA") { colors[c]=BMAGENTA; }
+        else if(myc=="BCYAN") { colors[c]=BCYAN; }
+        else if(myc=="BWHITE") { colors[c]=BWHITE; }
+        else { colors[c] = BLACK; }
+    }
+    // now iterate through image data and print colored spaces to screen    
+    const char* spc = " ";
+    for(int yy = 0; yy < h; yy++)
+    {
+        for(int xx = 0; xx < w; xx++)
+        {
+            int which = 0;
+            for(int i = 0; i < numcol; i++)
+            {
+                char d = data[numcol+1+yy][xx];
+                char e = xpmchars[i][0];
+                if(d == e)    // i is the color index
+                {
+                    which = i;
+                    break;
+                }
+            }
+            tx_plot2(spc, WHITE, colors[which].c_str(), x+xx, y+yy);
+        }   
+    }
 }

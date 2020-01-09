@@ -34,7 +34,7 @@ void gameloop()
     if(bc==1){tempc[0]='9';}
     tx_plot2(e_c, "30", tempc, rand()%X_RESOLUTION, rand()%Y_RESOLUTION);    
 */    
-
+    
     frames++;
     if(frames==fps) { frames = 0; }
 }
@@ -43,25 +43,26 @@ void gameloop()
 
 int init()
 {
-    //tx_plot2("TEST!", BRED, CYAN, 10, 10);
-    g.tx_draw_xpm(sample_xpm, 10, 10);
+    g.tx_draw_xpm(sample_xpm, 10, 5);
 }
 
 int debug()
 {
     cpu_pct = (float)((wait-_wait)*100.0 / wait);
-    if(cpu_pct>0){ 
+    if(cpu_pct>0)
+    { 
         g.tx_plot2(std::to_string(cpu_pct).c_str(), BRED, BLACK, 0, 0);
         g.tx_plot2(" % CPU ", WHITE, BLACK, 5, 0);
-        //g.tx_plot2(x11_names[100], WHITE, BLACK, 10, 0);
     }
     
     gettimeofday(&frameend, NULL);
     fpscalc = 1000000.0/((frameend.tv_usec - framestart.tv_usec));
     framestart = frameend;
-    if(fpscalc>0){
+    if(fpscalc>0)
+    {
         g.tx_plot2(std::to_string(fpscalc).c_str(), BCYAN, BLACK, 20, 0);
-        g.tx_plot2(" FPS   ", BCYAN, BLACK, 25, 0);}
+        g.tx_plot2(" FPS   ", BCYAN, BLACK, 25, 0);
+    }
 }
 
 int main()

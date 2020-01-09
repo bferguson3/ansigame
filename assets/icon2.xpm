@@ -1,18 +1,18 @@
 /* XPM */
 static const char *const sample_xpm[] = {
 /* columns rows colors chars-per-pixel */
-"32 32 6 1",
-"  c black", // Color, Monochrome, Grayscale, Symbolic
-". c navy",
-"X c red",
-"o c yellow",
-"O c gray100",
+"32 16 6 1",
+"  c BLACK", // Color, Monochrome, Grayscale, Symbolic
+". c BLUE",
+"X c BRED",
+"o c BYELLOW",
+"O c BWHITE",
 "+ c None",
 /* pixels */
-"++++++++++++++++++++++++++++++++",
-"++++++++++++++++++++++++++++++++",
-"++++++++++++++++++++++++++++++++",
-"++++++++++++++++++++++++++++++++",
+//"++++++++++++++++++++++++++++++++",
+//"++++++++++++++++++++++++++++++++",
+//"++++++++++++++++++++++++++++++++",
+//"++++++++++++++++++++++++++++++++",
 "++++++++++++++++++++++++++++++++",
 "++++++++              ++++++++++",
 "++++++++ ............ ++++++++++",
@@ -29,6 +29,7 @@ static const char *const sample_xpm[] = {
 " XOOXXXX ......... oOOooooooooo ",
 " XOOXXXX           oOOooooooooo ",
 " XOOXXXXXXXXX ++++ oOOooooooooo ",
+/*
 " XOOXXXXXXXXX ++++ oOOooooooooo ",
 " XOOXXXXXXXXX ++++ oOOooooooooo ",
 " XOOXXXXXXXXX ++++ oooooooooooo ",
@@ -40,5 +41,5 @@ static const char *const sample_xpm[] = {
 "++++++++++++++++++++++++++++++++",
 "++++++++++++++++++++++++++++++++",
 "++++++++++++++++++++++++++++++++",
-"++++++++++++++++++++++++++++++++"
+"++++++++++++++++++++++++++++++++"*/
 };
