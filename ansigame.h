@@ -155,3 +155,36 @@ void tx_plot2(const char* p, const char* fg, const char* bg, int x, int y)
         }
     }   
 }
+
+void tx_draw_xpm(const char* const* data, int x, int y)
+{
+    // split data 0 into width, height, color, cbpp    
+    std::string::size_type n;
+    std::string const s = data[0];
+    n = s.find(" ");
+    int w = 0;
+    int h = 0;
+    int numcol = 0;
+    int cpc = 0;
+    w = std::stoi(s.substr(0,n));
+    h = std::stoi(s.substr(n));
+    n = s.find(" ", n+1);
+    numcol = std::stoi(s.substr(n));
+    n = s.find(" ", n+1);
+    cpc = std::stoi(s.substr(n));
+
+    // while i < numcol: data[i] ...
+    std::string xpmchars[numcol];
+    std::string colors[numcol];
+    for(int i = 0; i < numcol; i++)
+    {
+        std::string ff = data[i+1];
+        xpmchars[i] = ff.substr(0,1);
+        n = ff.find("c");
+        colors[i] = ff.substr(n+2);
+    }
+            
+    tx_plot2(xpmchars[1].c_str(), WHITE, BLACK, x, y+1);
+    tx_plot2(colors[1].c_str(), WHITE, BLACK, x, y);
+    
+}

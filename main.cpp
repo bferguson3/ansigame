@@ -5,6 +5,7 @@
 //#include <string>
 #include <sys/time.h>
 //#include <math.h>
+#include "icon2.xpm"
 
 int fps = 60; // change to 50 or 30 or 15 if you want
 float w = 1000000/fps;
@@ -27,6 +28,7 @@ void gameloop()
     tx_plot2(std::to_string(frames).c_str(), BCYAN, BLACK, 30, 10);
 
     // plot colors
+/*
     const char* e_c = " ";
     int tc = rand() % 8 + 0x30;
     int bc = rand() % 2;
@@ -34,6 +36,7 @@ void gameloop()
     tempc[1] = tc;
     if(bc==1){tempc[0]='9';}
     tx_plot2(e_c, "30", tempc, rand()%X_RESOLUTION, rand()%Y_RESOLUTION);    
+*/    
 
     frames++;
     if(frames==fps) { frames = 0; }
@@ -41,7 +44,8 @@ void gameloop()
 
 int init()
 {
-    tx_plot2("TEST!", BRED, CYAN, 10, 10);
+//    tx_plot2("TEST!", BRED, CYAN, 10, 10);
+    tx_draw_xpm(sample_xpm, 10, 10);
 }
 
 int debug()
@@ -55,9 +59,9 @@ int debug()
     gettimeofday(&frameend, NULL);
     fpscalc = 1000000.0/((frameend.tv_usec - framestart.tv_usec));
     framestart = frameend;
-    
-    tx_plot2(std::to_string(fpscalc).c_str(), BCYAN, BLACK, 20, 0);
-    tx_plot2(" FPS   ", BCYAN, BLACK, 25, 0);
+    if(fpscalc>0){
+        tx_plot2(std::to_string(fpscalc).c_str(), BCYAN, BLACK, 20, 0);
+        tx_plot2(" FPS   ", BCYAN, BLACK, 25, 0);}
 }
 
 int main()
