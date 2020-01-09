@@ -16,9 +16,27 @@ bool ENABLE_DEBUG = true;
 
 int frames = 0;
 
+int tempx = 0;
+int tempy = 0;
+//char tempc[4] = "30";
+
 void gameloop()
 {
     tx_plot2(std::to_string(frames).c_str(), BCYAN, BLACK, 30, 10);
+    const char* e_c = " ";
+    int tc = rand() % 8 + 0x30;
+    int bc = rand() % 2;
+    char tempc[4] = "30";
+    tempc[1] = tc;
+    if(bc==1){tempc[0]='9';}
+    tx_plot2(e_c, "30", tempc, tempx, tempy);
+    if (tempc[1] < 0x37) { tempc[1]++; }
+    else { if(tempc[0]==0x33){tempc[0] = 0x39;}
+           else{ tempc[0] = 0x33;}
+           tempc[1] = 0x30; }
+    
+    tempx++; if(tempx >= X_RESOLUTION){ tempx=0; tempy++; }
+    if (tempy >= Y_RESOLUTION) { tempy = 0; }
 
     frames++;
     if(frames==fps) { frames = 0; }
@@ -34,8 +52,8 @@ int debug()
 {
     cpu_pct = (float)((wait-_wait)*100.0 / wait);
     if(cpu_pct>0){ 
-        tx_plot2(std::to_string(cpu_pct).c_str(), BRED, "0", 70, 23);
-        tx_plot2("% CPU ", WHITE, "0", 74, 23);
+        tx_plot2(std::to_string(cpu_pct).c_str(), BRED, BLACK, 0, 0);
+        tx_plot2("% CPU ", WHITE, BLACK, 5, 0);
     }
 }
 
