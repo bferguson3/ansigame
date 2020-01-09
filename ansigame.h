@@ -29,6 +29,23 @@ const int SCR_DAT_SIZE = 14; //< for 8 bit color depth
 
 unsigned char screen_data[X_RESOLUTION * Y_RESOLUTION][SCR_DAT_SIZE];
 
+class ANSIGame
+{
+    public:
+        int clear_screen();
+        void wait_for_resize();
+        int tx_pos(int x, int y);
+        int tx_print(const char* p, char* fg, char* bg);
+        int tx_plot(const char* p, char* fg, char* bg, int x, int y);
+        int tx_quit();
+        int show_cursor(bool tf);
+        int draw();
+        void tx_plot2(const char* p, const char* fg, const char* bg, int x, int y);
+    private:
+        
+};
+//#include "ansigame.h"
+
 int clear_screen()
 {
     // some terminals reset cursor to 0,0; mine does not
@@ -138,4 +155,3 @@ void tx_plot2(const char* p, const char* fg, const char* bg, int x, int y)
         }
     }   
 }
-
