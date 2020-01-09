@@ -11,6 +11,9 @@ float w = 1000000/fps;
 int wait = int(w);
 int _wait = wait;
 float cpu_pct = 0.0;
+float fpscalc = 0.0;
+
+struct timeval framestart, frameend;
 
 bool ENABLE_DEBUG = true;
 
@@ -52,6 +55,13 @@ int debug()
         tx_plot2(std::to_string(cpu_pct).c_str(), BRED, BLACK, 0, 0);
         tx_plot2("% CPU ", WHITE, BLACK, 5, 0);
     }
+    
+    gettimeofday(&frameend, NULL);
+    fpscalc = ((frameend.tv_usec - framestart.tv_usec))*(fps*1.0)/wait;
+    framestart = frameend;
+    
+    tx_plot2(std::to_string(fpscalc).c_str(), BCYAN, BLACK, 20, 0);
+    tx_plot2(" FPS   ", BCYAN, BLACK, 25, 0);
 }
 
 int main()
@@ -81,8 +91,8 @@ int main()
     // EXEC CODE MARK:
         gettimeofday(&tv2, NULL);
         _wait = wait - (tv2.tv_usec-tv1.tv_usec); // calc new wait time: this amounts to vblank.
-        if(_wait <= 0) { _wait = 1000; }
-        else if(_wait >= 16666) { _wait = 10000; }
+        if(_wait <= 0) { _wait = 1; }
+        else if(_wait >= wait) { _wait = wait; }
     //
         if(ENABLE_DEBUG == true) { debug(); }
 
