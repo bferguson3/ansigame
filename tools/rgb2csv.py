@@ -18,7 +18,7 @@ while i < len(rgbs2):
     b = rgbs2[i][4:7].strip()
     c = rgbs2[i][8:11].strip()
     d = rgbs2[i][12:].strip()
-    outs += a + ',' + b + ',' + c + ',' + d + '\n'
+    outs += "\"" + a + ',' + b + ',' + c + ',' + d + "\",\n"
     i += 1
 
 f = open('rgb.csv','w')
