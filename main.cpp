@@ -10,8 +10,8 @@
 
 int fps = 60;           // change to 50 or 30 or 15 if you want
 float w = 1000000/fps;
-int wait = int(w);
-int _wait = wait;
+int waittime = int(w);
+int _wait = waittime;
 float cpu_pct = 0.0;
 float fpscalc = 0.0;
 
@@ -49,7 +49,7 @@ int init()
 
 int debug()
 {
-    cpu_pct = (float)((wait-_wait)*100.0 / wait);
+    cpu_pct = (float)((waittime-_wait)*100.0 / waittime);
     if(cpu_pct>0)
     { 
         g.tx_plot2(std::to_string(cpu_pct).c_str(), BRED, BLACK, 0, 0);
@@ -89,9 +89,9 @@ int main()
 
     // EXEC CODE MARK:
         gettimeofday(&tv2, NULL);
-        _wait = wait - (tv2.tv_usec-tv1.tv_usec); // calc new wait time: this amounts to vblank.
+        _wait = waittime - (tv2.tv_usec-tv1.tv_usec); // calc new wait time: this amounts to vblank.
         if(_wait <= 0) { _wait = 1; }
-        else if(_wait >= wait) { _wait = wait; }
+        else if(_wait >= waittime) { _wait = waittime; }
     //
         if(ENABLE_DEBUG == true) { debug(); }
 
