@@ -3,10 +3,12 @@
 #include "ansigame.h"
 #include <unistd.h>
 #include <sys/time.h>
-//#include <ncurses.h>
-//#include <fstream>
+#include <thread>
+#include <fstream>
 
 //#include "icon2.xpm"
+
+using namespace std;
 
 int fps = 60;           // change to 50 or 30 or 15 if you want
 float w = 1000000/fps;
@@ -33,11 +35,34 @@ void gameloop()
     if(frames==fps) { frames = 0; }
 }
 
+void check_input()
+{
+    char c, d, e;
+    fstream fs;
+    fs.open("output", ios::out);
+    streambuf* sb_cout = cout.rdbuf();
+    streambuf* sb_cin = cin.rdbuf();
+    streambuf* sb_file = fs.rdbuf();
+    cout.rdbuf(sb_file);
+    while(1){
+        cin >> c >> d >> e;
+        if(c == 27 && d == 91){
+            cout << "UP";
+        }
+        //else { c = ' '; }
+        //cout << c;
+    }
+
+    fs.close();
+
+}
+
 #include "assets/icon2.xpm"
 
 int init()
 {   
     g.key_echo(false);
+
     g.wait_for_resize();
     g.clear_screen();
     g.show_cursor(false);    
@@ -71,6 +96,7 @@ int debug()
 int main()
 {
     init();
+    thread input_monitor(check_input);
 
     struct timeval tv1, tv2;
 
@@ -100,7 +126,7 @@ int main()
         fflush(stdout);
 
     }
-
+    input_monitor.join();
     return g.tx_quit();
 }
 

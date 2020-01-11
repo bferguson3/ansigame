@@ -1,0 +1,287 @@
+#title "マンボ イン 浪花シティ (GM音源)   もんでん"
+#copyright "(c)Akito Monden  2000.5.4"
+#timebase 48
+
+$t _-4             ; transpose
+$i E127 BS64 BR2   ; init expression & pitch bend
+
+$j k100 J37		; stick
+$k k110 J35		; kick
+$s k100 J40		; snare
+$n k80  J67		; agogo h
+$u k80  J68		; agogo l
+$r k110 J63		; Conga
+$h k80  J42		; closed hihat
+$o k110 J74		; open hihat
+$v k60  J46		; open hihat
+$w k110 J71		; whistle
+$f k110 J72		; whistle
+$p k60  J54		; tambourine
+$x k80  J50		; tom-H
+$y k80  J48		; tom-M
+$z k80  J45		; tom-L
+$a k100 J65		; timbale
+$b k100 J76		; wood block
+$c k100 J63		; Conga
+$d k100 J62		; Conga (mute)
+
+Z C2 BT4,4 t130
+Z EXx7e,x7f,x09,x01,xf7               r32 ; GM SYSTEM ON
+Z EXx41,x10,x42,x12,{x40,0,x7f,0},xf7 r32 ^1-16 ; GS-RESET
+
+;  Ch.    Bank  Prog.   Vol. Vel. gt.oct.ln. pan.
+B  C11 r8 H0,1 @39  r8 v110 k110 q11 o2 l8 p64 $t $i  ; bass
+C  C13 r8 H0,1 @0   r8 v90  k90  q9  o4 l8 p54 $t $i  ; piano
+1C C13 r8           r8      k90  q9  o4 l8     $t     ; 
+D  C1  r8 H0,1 @70  r8 v125 k125 q17 o4 l8 p64 $t $i  ; 
+E  C9  r8 H0,1 @56  r8 v105 k105 q15 o5 l8 p94 $t $i  ; 
+1E C9  r8           r8      k105 q15 o5 l8     $t     ; 
+F  C6  r8 H0,1 @107 r8 v90  k100 q1  o4 l8 p44 $t $i  ; 
+G  C7  r8 H0,1 @48  r8 v95  k90  q2  o4 l8 p24 $t $i  ; strings
+1G C8  r8 H0,1 @48  r8 v95  k90  q2  o5 l8 p104$t $i  ; 
+J  C10 r8 H0,1 @0   r8 v120 k100 RT  o3 l8      $i    ; drum
+1J C10 r8           r8      k100 RT  o4 l8            ; 
+K  C10 r8           r8      k100 RT  o4 l8            ; 
+1K C10 r8           r8      k100 RT  o4 l8            ; 
+2K C10 r8           r8      k100 RT  o4 l8            ; 
+3K C10 r8           r8      k100 RT  o4 l8            ; 
+
+J N24,58,60    ; J58のピッチを下げる
+J BR12 BS80    ; リズム全体のピッチ上げる
+B TC67 TR66
+DEF TC80 TR80
+
+BCDEFGJK r8
+
+B   y91,10  y93,15  ; bass
+C   y91,0   y93,100
+D   y91,120 y93,40
+E   y91,40  y93,70
+F   y91,60  y93,60
+G1G y91,30  y93,90
+J   y91,90  y93,45  ; drum
+
+E N1,x63,40          ; attack = 40
+
+BCDEFGJK r8
+
+D FV2,0,16,-15,4.,15 ; エンベロープ
+D IB8,1,48,14
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; イントロ
+
+B r1r1 f4.^4rc4 f4.^4r>c,,9d,-10<
+D r1r1r1 @57 (20 rfrf>d-4c4< )20 @70
+C  [>rc4rd-4c4<]4
+1C [ra-4fa-4g4]4
+E  <[rfrf>d-4c4<]4>
+1E <[rcrca-4g4]4>
+F @68 (10 q15 [rfrf>d-4c4<]4 )10 @107 q1
+G r1r1r1r1
+J $k [c4.c4.^4]2
+1J J49 k70 r1r1
+K J56 k90 r1 c2crcc ; cowbell
+2K J63 k100 [c,-50c16,-40c16,-30c,+20c,-40 c,-50c,-50cc]2 ; conga
+J $k [c4.c4.^4]2
+1J J49 k70 r1r2r4 J57 c,-40c,-20
+K J56 k90 r1 c2crcc ; cowbell
+1K J65 k70 r4c4r4c4 )30 rc16c16rccc,-40cc,-40 (30 ; timbale
+2K J63 k100 [c,-50c,-40c,+20c,-40 c,-50c,-50cc]2 ; conga
+3K J74 k100 [J74c4J73c,-20cJ74c4J73c,-20c]2 ; guiro
+
+;;;;;;;;;;;;;;;;;
+; Ａメロ（前半）
+
+B [f4.>c4.<c4]2 [c4.g4.<g4>]4 f4.>c4.<c4 f4.rFB1,-30,24,30>c4FB0de<
+C  >[rrcrrcrr]2< [rrgrrgrr]4 >rrcrrcrr<  >rc4rd-4c4<
+1C [fra-fra-rf]2 [crecrerc]4  fra-fra-rf ra-4fa-4g4
+D q17 @70 o4
+D rfrf4.r4 rf,-20a-,,1f,-20>c,,1<f,-20>d-c<
+D b-1r2.g,,1a- b-4.>e4.^4 rre,,0fed-c<b- a-1 r1
+E1E q15
+E  a-a-r2. r2rcrc | eer2. r2r<grg> |  eer2. r2r<grg> | a-a-r2. rfrf>d-4c4<
+1E ffr2.r2<ra-ra->| ccr2. r2r<ere> |  ccr2. r2r<ere> | ffr2. rcrca-4g4
+F r1r1 r2.ee>d-c^2.<
+F r1r1 r1 rfrf>d-4c4<
+G [r1]8
+J $k [c4.c4.^4]8
+1J J49 k70 c1
+K J56 k90 [c4c4c4c4]7 c2crcc ; cowbell
+1K J65 k70 [r4c4r4c4]7 )30 rc16c16rccrcr (30 ; timbale
+2K J63 k100 [c,-50c,-40c,+20c,-40 c,-50c,-50cc]7 r1 ; conga
+3K J74 k100 [J74c4J73c,-20cJ74c4J73c,-20c]7 r1 ; guiro
+
+;;;;;;;;;;;;;;;;;;;;;;;;;
+; Ａメロ（後半）
+
+B [f4.>c4.<c4]2 [c4.g4.<g4>]4 f4.>c4.<c4 f4.ra-4b-4
+C  >[rrcrrcrr]2< [rrgrrgrr]4 >rrcrrcrr<
+1C [fra-fra-rf]2 [crecrerc]4  fra-fra-rf
+C  rff4>c4e-4<
+1C rcc4a-4b-4
+D rfrf4.r4 r2rc,-10e,,1fg1 r2.g,,1a- b-4.>c4.^4 <e2.g4 f1 r1
+F @68 v110 k110 q17
+F r2 rf,-20a-,,1f,-20>c,,1<f,-20>d-c^8r4.<
+F r2 rc,-20g,,1e,-20>c,,1<e,-20>d-c^8r4.<
+F r2 rc,-20g,,1e,-20>c,,1<e,-20>d-c^8re4<
+F >f1< r1
+E  a-a-r2. r2rcrc | eer2. r2r<grg> |  eer2. r2r<grg> | a-a-r2.
+1E ffr2.r2<ra-ra->| ccr2. r2r<ere> |  ccr2. r2r<ere> | ffr2.
+E  rff4>c4e-4<
+1E rcc4a-4b-4
+G1G FV2,-60,1,60 ; エンベロープ
+G  f1^1 FV0 g1^2>d-2c1<e2.g4 f1r1
+1G  f1^1 FV0 g1^2>d-2c1<e2.g4 f1r1
+J $k [c4.c4.^4]8
+1J J49 k70 c1r1 r1r1 r1r1 J57 r1r2c2,-20
+K J56 k90 [c4c4c4c4]7 c2crcc ; cowbell
+1K J65 k70 [r4c4r4c4]7 )30 rc16c16rccrcr (30 ; timbale
+2K J63 k100 [c,-50c,-40c,+20c,-40 c,-50c,-50cc]7 r1 ; conga
+3K J74 k100 [J74c4J73c,-20cJ74c4J73c,-20c]7 r1 ; guiro
+
+;;;;;;;;;;;;;;;
+; Ｂメロ
+
+B b-4.>f4.<f4 f4.>c4.<c4 c4.g4.<g4> f4.>c4<ccd
+B b-4.>f4.<f4 f4.>c4.<c4 c4.g4.<g4> f8.f8r16f4r>d,-10e,-15<
+C  >rrd-rrd-rr rrcrrcrr<   rrgrrgrr >rrcrrcrr<
+1C frb-frb-rf  fra-fra-rf  crecrerc fra-fra-rf
+C  >rrd-rrd-rr rrcrrcrr<   rrgrrgrr >c8.c8r16c8r2<  ;>rrcrrcrr<
+1C frb-frb-rf  fra-fra-rf  crecrerc a-8.a-8r16a-8r2 ;fra-fra-rf
+D @66 v120
+D o5 q15
+D f8.f8r16f8f8.e-8r16d-8 fc4.rcd-e- e8.e8r16e8e8.f8r16g8 f8c4.r2
+D b-8.b-r16b-b-4.r a-8.a-r16a-a-4.r g8.gr16g e8.er16e f8.fr16f^8,,0e48,-20,0d48,-30,0c48,-40,0<b48,-50,0a48,-60,0r48r4
+E  ffr2.  r2rcrc    | eer2. r2rcrc
+1E d-d-r2.r2<ra-ra->| ccr2. r2r<a-ra->
+E  ffr2.  r2rcrc    | eer2. c8.c8r16c4,,0<b24,-20,0a24,-30,0g24,-40,0>r4
+1E d-d-r2.r2<ra-ra->| ccr2. <a-8.a-8r16a-4,,0g24,-20,0f24,-30,0e24,-40,0r4>
+F r2 rc,-20f,,1a-,-20>c,,1<f,-20>d-c^8r4.<
+F r2 rc,-20e,,1g,-20>c<f4.r<f,-20,a-,,1f> ;r2 ;>c,,1<f,-20>d-c^8r4.<
+F f8.fr16ff4.r f8.fr16ff4.r e8.er16e c8.cr16c c8.cr16c^8,,0<b48,-20,0a48,-30,0g48,-40,0f48,-50,0e48,-60,0>r48r4
+G  b-1a-1g1f1
+1G b-1a-1g1f1
+G  >d-1c2.f4e2.g4 q13f8.f8r16f4r4.< q2
+1G >d-1c2.f4e2.g4 q13f8.f8r16f4r4.< q2
+J $k [c4.c4.^4]8
+1J J49 k70 [c1r1r1r1]2
+K J56 k90 [c4c4c4c4]7 c8.c8.r8 r2 ;c2crcc ; cowbell
+1K J65 k70 [r4c4:r4c4]4 )30rr16c16,-20cc(30 [r4c4r4c4]3 )30 rc16c16rcrrrr (30 ; timbale
+2K J63 k100 [c,-50c,-40c,+20c,-40 c,-50c,-50cc]7 r4. J58 c8^2,110 ; conga
+3K J74 k100 [J74c4J73c,-20cJ74c4J73c,-20c]7 r1 ; guiro
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; 間奏
+
+B [f4.>c4.<c4]3 f4.>c4.d,,9e,-10<
+C  [>rc4rd-4c4<]4
+1C [ra-4fa-4g4]4
+E  [a-a-r2. r2 :rcrc ]2 r2
+1E [ffr2.r2 :<ra-ra->]2 r2
+F q17 <
+F (10 [r1 r2 :rf,-20a-,,1f,-20]2 rc,-20d,,1e,-20 > )10
+D q17 o3 (10 ffr2. r2rcrc ffr2. r4.r4c,-20d,,1e,-20 )10
+G [r1]4
+J $k [c4.c4.^4]2
+1J J49 k70 r1r1
+K J56 k90 r1 c2crcc ; cowbell
+2K J63 k100 [c,-50c16,-40c16,-30c,+20c,-40 c,-50c,-50cc]2 ; conga
+J $k [c4.c4.^4]2
+1J J49 k70 r1r2r4 J57 c,-40c,-20
+K J56 k90 r1 c2crcc ; cowbell
+1K J65 k70 r4c4r4c4 )30 rc16c16rccc,-40cc,-40 (30 ; timbale
+2K J63 k100 [c,-50c,-40c,+20c,-40 c,-50c,-50cc]2 ; conga
+3K J74 k100 [J74c4J73c,-20cJ74c4J73c,-20c]2 ; guiro
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;２周目
+
+;;;;;;;;;;;;;;;;;
+; Ａメロ（前半）
+
+B [f4.>c4.<c4]2 [c4.g4.<g4>]4 f4.>c4.<c4 f4.rFB1,-30,24,30>c4FB0de<
+C  >[rrcrrcrr]2< [rrgrrgrr]4 >rrcrrcrr<  >rc4rd-4c4<
+1C [fra-fra-rf]2 [crecrerc]4  fra-fra-rf ra-4fa-4g4
+D q17 @70 o4
+D rfrf4.r4 rf,-20a-,,1f,-20>c,,1<f,-20 >d-<f,-10 e,,1frg^2
+D r2.g,,1a- g4.^8re4e rc,-20g,,1e,-20b-,,1e,-20a-g f,,1f,-20>d-c^2<r1
+E1E q15
+E  a-a-r2. r2rcrc | eer2. r2r<grg> |  eer2. r2r<grg> | a-a-r2. rfrf>d-4c4<
+1E ffr2.r2<ra-ra->| ccr2. r2r<ere> |  ccr2. r2r<ere> | ffr2. rcrca-4g4
+F (10<ff,-20>)10r2.r1
+F @107 v90 k100 q1 o4
+F r2.ee>d-c^2.<
+F r1r1 r1 rfrf>d-4c4<
+G [r1]8
+J $k [c4.c4.^4]8
+1J J49 k70 c1
+K J56 k90 [c4c4c4c4]7 c2crcc ; cowbell
+1K J65 k70 [r4c4r4c4]7 )30 rc16c16rccrcr (30 ; timbale
+2K J63 k100 [c,-50c,-40c,+20c,-40 c,-50c,-50cc]7 r1 ; conga
+3K J74 k100 [J74c4J73c,-20cJ74c4J73c,-20c]7 r1 ; guiro
+
+;;;;;;;;;;;;;;;;;;;;;;;;;
+; Ａメロ（後半）
+
+B [f4.>c4.<c4]2 [c4.g4.<g4>]4 f4.>c4.<c4 f4.ra-4b-4
+C  >[rrcrrcrr]2< [rrgrrgrr]4 >rrcrrcrr<
+1C [fra-fra-rf]2 [crecrerc]4  fra-fra-rf
+C  rff4>c4e-4<
+1C rcc4a-4b-4
+D  rfrf4.r4       r2rc,-10g,,1a-b-2.r4 r2.>c,,1d- c4.^4<g4. e2.g4 f1 r1
+F @68 v110 k110 q17
+F r2 rf,-20a-,,1f,-20>c,,1<f,-20>d-c^8r4.< ; r2
+F r2 rc,-20g,,1e,-20>c,,1<e,-20>d-c^8r4.< ; r2
+F r2 rc,-20g,,1e,-20>c,,1<e,-20>d-c^8re4< ; r2
+F >f1< r1
+E  a-a-r2. r2rcrc | eer2. r2r<grg> |  eer2. r2r<grg> | a-a-r2.
+1E ffr2.r2<ra-ra->| ccr2. r2r<ere> |  ccr2. r2r<ere> | ffr2.
+E  rff4>c4e-4<
+1E rcc4a-4b-4
+G1G FV2,-60,1,60 ; エンベロープ
+G  f1^1 FV0 g1^2>d-2c1<e2.g4 f1r1
+1G  f1^1 FV0 g1^2>d-2c1<e2.g4 f1r1
+J $k [c4.c4.^4]8
+1J J49 k70 c1r1 r1r1 r1r1 J57 r1r2c2,-20
+K J56 k90 [c4c4c4c4]7 c2crcc ; cowbell
+1K J65 k70 [r4c4r4c4]7 )30 rc16c16rccrcr (30 ; timbale
+2K J63 k100 [c,-50c,-40c,+20c,-40 c,-50c,-50cc]7 r1 ; conga
+3K J74 k100 [J74c4J73c,-20cJ74c4J73c,-20c]7 r1 ; guiro
+
+;;;;;;;;;;;;;;;
+; Ｂメロ
+
+B b-4.>f4.<f4 f4.>c4.<c4 c4.g4.<g4> f4.>c4<ccd
+B b-4.>f4.<f4 f4.>c4.<c4 c4.g4.<g4> f8.f8r16f4rrr
+C  >rrd-rrd-rr rrcrrcrr<   rrgrrgrr >rrcrrcrr<
+1C frb-frb-rf  fra-fra-rf  crecrerc fra-fra-rf
+C  >rrd-rrd-rr rrcrrcrr<   rrgrrgrr >c8.c8r16c8r2<  ;>rrcrrcrr<
+1C frb-frb-rf  fra-fra-rf  crecrerc a-8.a-8r16a-8r2 ;fra-fra-rf
+D @66 v120
+D o5 q15
+D f8.f8r16f8f8.e-8r16d-8 fc4.rcd-e- e8.e8r16e8e8.f8r16g8 f8c4.r2
+D b-8.b-r16b-b-4.r a-8.a-r16a-a-4.r g8.gr16g e8.er16e f8.fr16f^8,,0e48,-20,0d48,-30,0c48,-40,0<b48,-50,0a48,-60,0r48r4
+E  ffr2.  r2rcrc    | eer2. r2rcrc
+1E d-d-r2.r2<ra-ra->| ccr2. r2r<a-ra->
+E  ffr2.  r2rcrc    | eer2. c8.c8r16c4,,0<b24,-20,0a24,-30,0g24,-40,0>r4
+1E d-d-r2.r2<ra-ra->| ccr2. <a-8.a-8r16a-4,,0g24,-20,0f24,-30,0e24,-40,0r4>
+F r2 rc,-20f,,1a-,-20>c,,1<f,-20>d-c^8r4.<
+F r2 rc,-20e,,1g,-20>c<f4.r<f,-20,a-,,1f> ;r2 ;>c,,1<f,-20>d-c^8r4.<
+F f8.fr16ff4.r f8.fr16ff4.r e8.er16e c8.cr16c c8.cr16c^8,,0<b48,-20,0a48,-30,0g48,-40,0f48,-50,0e48,-60,0>r48r4
+G  b-1a-1g1f1
+1G b-1a-1g1f1
+G  >d-1c2.f4e2.g4 q13f8.f8r16f4r4.< q2
+1G >d-1c2.f4e2.g4 q13f8.f8r16f4r4.< q2
+J $k [c4.c4.^4]8
+1J J49 k70 [c1r1r1r1]2
+K J56 k90 [c4c4c4c4]7 c8.c8.r8 r2 ;c2crcc ; cowbell
+1K J65 k70 [r4c4:r4c4]4 )30rr16c16,-20cc(30 [r4c4r4c4]3 )30 rc16c16rcrrrr (30 ; timbale
+2K J63 k100 [c,-50c,-40c,+20c,-40 c,-50c,-50cc]7 r4. J58 c8^2,110 ; conga
+3K J74 k100 [J74c4J73c,-20cJ74c4J73c,-20c]7 r1 ; guiro
+
+;
+
+B @0
+

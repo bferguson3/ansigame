@@ -1,2 +1,4 @@
 EXE
-
+./tools/showansi
+./tools/ibt
+./tools/colortest
