@@ -43,6 +43,8 @@ int init()
     g.show_cursor(false);    
 
     g.tx_draw_xpm(sample_xpm, 10, 5);
+
+    return 0;
 }
 
 int debug()
@@ -62,6 +64,8 @@ int debug()
         g.tx_plot2(std::to_string(fpscalc).c_str(), BCYAN, BLACK, 20, 0);
         g.tx_plot2(" FPS   ", BCYAN, BLACK, 25, 0);
     }
+
+    return 0;
 }
 
 int main()
