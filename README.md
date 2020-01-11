@@ -6,7 +6,7 @@ Build options:
 Build and run (GTK/Ubuntu):
 `$ ./go`
 
-* Requires SFML for non-delayed keyboard input
+* Requires X11 during linking process
 
 Resources:<br>
 **FONTS**
