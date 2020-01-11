@@ -6,7 +6,7 @@ Build options:
 Build and run (GTK/Ubuntu):
 `$ ./go`
 
-Resources:
-https://en.wikipedia.org/wiki/ANSI_escape_code
-https://int10h.org/oldschool-pc-fonts/
-https://16colo.rs/
+Resources:<br>
+https://en.wikipedia.org/wiki/ANSI_escape_code<br>
+https://int10h.org/oldschool-pc-fonts/<br>
+https://16colo.rs/<br>
