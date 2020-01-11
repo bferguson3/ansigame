@@ -3,8 +3,8 @@
 #include "ansigame.h"
 #include <unistd.h>
 #include <sys/time.h>
-#include <thread>
-#include <SFML/Window/Keyboard.hpp>
+#include <X11/Xlib.h>
+#include <X11/keysym.h>
 
 //#include "icon2.xpm"
 
@@ -35,33 +35,43 @@ void gameloop()
     if(frames==fps) { frames = 0; }
 }
 
+bool isKeyPressed(KeySym k)
+{
+    KeySym keysym = k;
+    Display *dpy;
+    dpy = XOpenDisplay(NULL);
+
+    KeyCode keycode = XKeysymToKeycode(dpy, keysym);
+    if (keycode != 0)
+    {
+        char keys[32];
+        XQueryKeymap(dpy, keys);
+
+        XCloseDisplay(dpy);
+
+        return (keys[keycode / 8] & (1 << (keycode % 8))) != 0;
+    }
+    else
+    {
+        XCloseDisplay(dpy);
+        return false;
+    }
+}
 
 void check_input()
 {
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-        {
-            cout << "LEFT";
-        }
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-    {
-        cout << "RIGHT";
-    }
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-    {
-        cout << "UP";
-    }
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-    {
-        cout << "DOWN";
-    }
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
-    {
-        cout << "(1)";
-    }
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::X))
-    {
-        cout << "(2)";
-    }
+    if(isKeyPressed(XK_Left))
+      { cout << "LEFT"; }
+    if(isKeyPressed(XK_Right)){
+        cout << "RIGHT"; }
+    if(isKeyPressed(XK_Up)){
+        cout << "UP"; }
+    if(isKeyPressed(XK_Down)){
+        cout << "DOWN"; }
+    if(isKeyPressed(XK_z)){
+        cout << "(1)"; }
+    if(isKeyPressed(XK_x)){
+        cout << "(2)"; }
     cout << "                      ";
 }
 
