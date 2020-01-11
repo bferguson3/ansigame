@@ -10,3 +10,9 @@ Resources:<br>
 https://en.wikipedia.org/wiki/ANSI_escape_code<br>
 https://int10h.org/oldschool-pc-fonts/<br>
 https://16colo.rs/<br>
+<br>
+MIDI soundfont for ubuntu:<br>
+fluid-soundfont-gm<br>
+<br>
+MML2MIDI homepage:<br>
+http://hpc.jp/~mml2mid/<br>
