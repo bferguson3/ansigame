@@ -3,8 +3,8 @@
 #include "ansigame.h"
 #include <unistd.h>
 #include <sys/time.h>
-#include <thread>
-#include <fstream>
+#include <X11/Xlib.h>
+#include <X11/keysym.h>
 
 //#include "icon2.xpm"
 
@@ -35,26 +35,44 @@ void gameloop()
     if(frames==fps) { frames = 0; }
 }
 
+bool isKeyPressed(KeySym k)
+{
+    KeySym keysym = k;
+    Display *dpy;
+    dpy = XOpenDisplay(NULL);
+
+    KeyCode keycode = XKeysymToKeycode(dpy, keysym);
+    if (keycode != 0)
+    {
+        char keys[32];
+        XQueryKeymap(dpy, keys);
+
+        XCloseDisplay(dpy);
+
+        return (keys[keycode / 8] & (1 << (keycode % 8))) != 0;
+    }
+    else
+    {
+        XCloseDisplay(dpy);
+        return false;
+    }
+}
+
 void check_input()
 {
-    char c, d, e;
-    fstream fs;
-    fs.open("output", ios::out);
-    streambuf* sb_cout = cout.rdbuf();
-    streambuf* sb_cin = cin.rdbuf();
-    streambuf* sb_file = fs.rdbuf();
-    cout.rdbuf(sb_file);
-    while(1){
-        cin >> c >> d >> e;
-        if(c == 27 && d == 91){
-            cout << "UP";
-        }
-        //else { c = ' '; }
-        //cout << c;
-    }
-
-    fs.close();
-
+    if(isKeyPressed(XK_Left))
+      { cout << "LEFT"; }
+    if(isKeyPressed(XK_Right)){
+        cout << "RIGHT"; }
+    if(isKeyPressed(XK_Up)){
+        cout << "UP"; }
+    if(isKeyPressed(XK_Down)){
+        cout << "DOWN"; }
+    if(isKeyPressed(XK_z)){
+        cout << "(1)"; }
+    if(isKeyPressed(XK_x)){
+        cout << "(2)"; }
+    cout << "                      ";
 }
 
 #include "assets/icon2.xpm"
@@ -96,7 +114,7 @@ int debug()
 int main()
 {
     init();
-    thread input_monitor(check_input);
+    //thread input_monitor(check_input);
 
     struct timeval tv1, tv2;
 
@@ -109,10 +127,11 @@ int main()
         gettimeofday(&tv1, NULL);
     //
         // run the game loop (bulk of code here!)
+        
         gameloop();
-
+        
         g.draw();
-
+        check_input();   
     // EXEC CODE MARK:
         gettimeofday(&tv2, NULL);
         _wait = waittime - (tv2.tv_usec-tv1.tv_usec); // calc new wait time: this amounts to vblank.
@@ -126,7 +145,7 @@ int main()
         fflush(stdout);
 
     }
-    input_monitor.join();
+    //input_monitor.join();
     return g.tx_quit();
 }
 
