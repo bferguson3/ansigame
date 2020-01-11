@@ -71,12 +71,15 @@ int ANSIGame::tx_print(const char* p, char* fg, char* bg)
     bg = bg + 10;
     printf("%c[%s;%sm%s", 0x1b, fg, bg, p);
 
+    return 0;
 }
 
 int ANSIGame::tx_plot(const char* p, char* fg, char* bg, int x, int y)
 {
     tx_pos(x, y);
     tx_print(p, fg, bg);
+
+    return 0;
 }
 
 int ANSIGame::tx_quit()
@@ -108,6 +111,8 @@ int ANSIGame::draw()
             printf("%c", screen_data[i][v]);
         }
     }
+
+    return 0;
 }
 
 void ANSIGame::tx_plot2(const char* p, const char* fg, const char* bg, int x, int y)
