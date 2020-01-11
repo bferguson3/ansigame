@@ -16,3 +16,5 @@ fluid-soundfont-gm<br>
 <br>
 MML2MIDI homepage:<br>
 http://hpc.jp/~mml2mid/<br>
+Free online sequencer with midi export:<br>
+http://onlinesequencer.net<br>
