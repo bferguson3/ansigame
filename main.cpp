@@ -3,6 +3,8 @@
 #include "ansigame.h"
 #include <unistd.h>
 #include <sys/time.h>
+//#include <ncurses.h>
+//#include <fstream>
 
 //#include "icon2.xpm"
 
@@ -21,19 +23,11 @@ int frames = 0;
 
 ANSIGame g;
 
+char inputbuffer[16];
+
 void gameloop()
 {
-    g.tx_plot2("This is a rendering test!", BCYAN, BLACK, 30, 10);
-    // plot colors
-/*
-    const char* e_c = " ";
-    int tc = rand() % 8 + 0x30;
-    int bc = rand() % 2;
-    char tempc[4] = "30";
-    tempc[1] = tc;
-    if(bc==1){tempc[0]='9';}
-    tx_plot2(e_c, "30", tempc, rand()%X_RESOLUTION, rand()%Y_RESOLUTION);    
-*/    
+    g.tx_plot2(std::to_string(inputbuffer[0]).c_str(), BCYAN, BLACK, 30, 10);
     
     frames++;
     if(frames==fps) { frames = 0; }
@@ -43,7 +37,11 @@ void gameloop()
 
 int init()
 {   
-    g.disable_key_echo();    
+    g.key_echo(false);
+    g.wait_for_resize();
+    g.clear_screen();
+    g.show_cursor(false);    
+
     g.tx_draw_xpm(sample_xpm, 10, 5);
 }
 
@@ -68,28 +66,21 @@ int debug()
 
 int main()
 {
-    g.wait_for_resize();
-
-    g.clear_screen();
-
-    g.show_cursor(false);    
+    init();
 
     struct timeval tv1, tv2;
 
-    init();
-
-    int inch = 0;
-    while(inch == 0) // TODO
-    {
+    while(1) // TODO
+    { 
         // _wait is the expected FPS in us minus code exec time.
-        usleep(_wait); 
-
+        usleep(_wait);
+        //^ somehow replace this with getch?
     // EXEC CODE MARK:
         gettimeofday(&tv1, NULL);
     //
-
         // run the game loop (bulk of code here!)
         gameloop();
+
         g.draw();
 
     // EXEC CODE MARK:
@@ -103,6 +94,7 @@ int main()
         // update screen all at once - don't make more changes after this point.
         
         fflush(stdout);
+
     }
 
     return g.tx_quit();

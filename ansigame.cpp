@@ -138,12 +138,20 @@ void ANSIGame::tx_plot2(const char* p, const char* fg, const char* bg, int x, in
     }   
 }
 
-void ANSIGame::disable_key_echo()
+void ANSIGame::key_echo(bool tf)
 {
     struct termios t;
-    tcgetattr(0, &t);    
-    t.c_lflag &= ~(ECHO);
-    tcsetattr(0, TCSAFLUSH, &t);
+    if(tf == false)
+    {        
+        tcgetattr(0, &t);    
+        t.c_lflag &= ~(ECHO | ICANON );
+        tcsetattr(0, TCSAFLUSH, &t);
+    }else
+    {
+        tcgetattr(0, &t);
+        t.c_lflag &= (ECHO | ECHONL | ICANON | IEXTEN | ISIG);
+        tcsetattr(0, TCSAFLUSH, &t);
+    }
 }    
 
 const char* x11_names[] = 
