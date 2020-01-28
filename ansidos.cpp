@@ -4,6 +4,7 @@
 #include <IOSTREAM.H>
 #include <dos.h>
 #include <TIME.H>
+#include "../icon2.xpm"
 
 #define GREEN 32
 #define FUSCHIA 35
@@ -166,6 +167,66 @@ void movecursor(int x, int y)
     }
 }
 
+int substring(const char* dat, unsigned char sub[], int index, char tgt)
+{
+    int i = index;
+    int p = 0;
+    while ((dat[i] != tgt) && (i < 99))
+    {
+	sub[p] = dat[i];
+	i++;
+	p++;
+    }
+    //i--; p--;
+    return i;
+}
+
+int cstr2int(unsigned char cstr[], int offset)
+{
+    int m = 1;
+    int v = 0;
+    for(int p = offset-1; p >= 0; p--)
+    {
+	v += (cstr[p] - 0x30) * m;
+	m *= 10;
+    }
+    return v;
+}
+
+int len(unsigned char c[])
+{
+   int i = 0;
+   while(c[i] != 0)
+   {
+       i++;
+   }
+   return i;
+}
+
+void draw_xpm(const char* const* data, int x, int y)
+{
+    movecursor(-99, -99);
+    movecursor(x, y);
+
+    // helper routine: substring(0, ' ')
+    unsigned char imgx[4];
+    int pos = substring(data[0], imgx, 0, ' ');
+    int xint = cstr2int(imgx, len(imgx)-1);
+
+    unsigned char imgy[4];
+    int pos2 = substring(data[0], imgy, pos+1, ' ');
+    int yint = cstr2int(imgy, len(imgy));
+
+    unsigned char cols[3] = {0, 0, 0};
+    int pos3 = substring(data[0], cols, pos2+1, ' ');
+    int colors = cstr2int(cols, len(cols));
+
+    unsigned char cppx[1] = {0};
+    substring(data[0], cppx, pos3+1, ' ');
+
+    cout << "W:" << xint << "H:" << yint << "Clr:" << colors << "Cpp:" << cppx;
+}
+
 int main()
 {
     //Init:
@@ -195,6 +256,8 @@ int main()
 	    cls();
 
 	    cout << "FPS:" << fps;
+
+	    draw_xpm(sample_xpm, 10, 10);
 
 	    movecursor(-99, 24);
 	    char u,d,l,r;
